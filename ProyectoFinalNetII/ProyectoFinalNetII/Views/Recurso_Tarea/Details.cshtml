@@ -1,0 +1,50 @@
+﻿@model Platform.Entity.Entity.Recurso_Tarea
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Recurso_Tarea</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actividad.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actividad.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Recurso.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Recurso.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarea.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarea.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
