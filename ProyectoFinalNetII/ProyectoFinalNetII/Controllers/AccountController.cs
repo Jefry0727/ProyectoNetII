@@ -48,6 +48,8 @@ namespace ProyectoFinalNetII.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
+                    Session["Usuario"] = model.UserName;
+                    Session["Contrasenia"] = model.Password;
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }

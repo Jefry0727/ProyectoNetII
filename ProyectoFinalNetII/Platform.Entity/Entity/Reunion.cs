@@ -11,12 +11,16 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Reunion
     {
         public int id { get; set; }
+        [DisplayName("Lugar")]
         public string lugar { get; set; }
+        [DisplayName("Tematica")]
         public string tematica { get; set; }
+        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
     
         public virtual Proyecto Proyecto { get; set; }

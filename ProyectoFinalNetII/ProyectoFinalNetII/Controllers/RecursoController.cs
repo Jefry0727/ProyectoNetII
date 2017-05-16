@@ -50,8 +50,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Recurso.Add(recurso);
-                db.SaveChanges();
+                db.crearRecurso(recurso.nombre, recurso.cantidad, recurso.ubicacion);
                 return RedirectToAction("Index");
             }
 
@@ -82,8 +81,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(recurso).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarRecurso(recurso.id, recurso.nombre, recurso.cantidad, recurso.ubicacion);
                 return RedirectToAction("Index");
             }
             return View(recurso);
@@ -109,9 +107,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Recurso recurso = db.Recurso.Find(id);
-            db.Recurso.Remove(recurso);
-            db.SaveChanges();
+            db.eliminarRecurso(id);
             return RedirectToAction("Index");
         }
 

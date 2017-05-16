@@ -52,8 +52,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Reunion.Add(reunion);
-                db.SaveChanges();
+                db.crearReunion(reunion.lugar, reunion.tematica, reunion.Proyecto_id);
                 return RedirectToAction("Index");
             }
 
@@ -86,8 +85,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(reunion).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarReunion(reunion.id, reunion.lugar, reunion.tematica, reunion.Proyecto_id);
                 return RedirectToAction("Index");
             }
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", reunion.Proyecto_id);
@@ -114,9 +112,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reunion reunion = db.Reunion.Find(id);
-            db.Reunion.Remove(reunion);
-            db.SaveChanges();
+            db.eliminarReunion(id);
             return RedirectToAction("Index");
         }
 

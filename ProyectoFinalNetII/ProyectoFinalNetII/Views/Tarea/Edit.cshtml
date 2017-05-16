@@ -4,13 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Editar</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Tarea</h4>
         <hr />
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha_inicio, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha_inicio)
+                @Html.TextBoxFor(model => model.fecha_inicio, new { type = "date" })
                 @Html.ValidationMessageFor(model => model.fecha_inicio)
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha_fin, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha_fin)
+                @Html.TextBoxFor(model => model.fecha_fin, new { type = "date" })
                 @Html.ValidationMessageFor(model => model.fecha_fin)
             </div>
         </div>
@@ -66,7 +66,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 
 @section Scripts {

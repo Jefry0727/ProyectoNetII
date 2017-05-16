@@ -50,8 +50,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Tarea.Add(tarea);
-                db.SaveChanges();
+                db.crearTarea(tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
                 return RedirectToAction("Index");
             }
 
@@ -82,8 +81,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tarea).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarTarea(tarea.id, tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
                 return RedirectToAction("Index");
             }
             return View(tarea);
@@ -109,9 +107,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tarea tarea = db.Tarea.Find(id);
-            db.Tarea.Remove(tarea);
-            db.SaveChanges();
+            db.eliminarTarea(id);
             return RedirectToAction("Index");
         }
 

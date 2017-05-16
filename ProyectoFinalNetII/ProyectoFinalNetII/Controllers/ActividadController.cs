@@ -53,8 +53,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Actividad.Add(actividad);
-                db.SaveChanges();
+                db.crearActividad(actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
+                    actividad.Proyecto_id, actividad.Integrante_id);
                 return RedirectToAction("Index");
             }
 
@@ -89,8 +89,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(actividad).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarActividad(actividad.id, actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
+                    actividad.Proyecto_id, actividad.Integrante_id);
                 return RedirectToAction("Index");
             }
             ViewBag.Integrante_id = new SelectList(db.Integrante, "id", "id", actividad.Integrante_id);
@@ -118,9 +118,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Actividad actividad = db.Actividad.Find(id);
-            db.Actividad.Remove(actividad);
-            db.SaveChanges();
+            db.eliminarActividad(id);
             return RedirectToAction("Index");
         }
 

@@ -4,13 +4,13 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Crear</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Proyecto</h4>
         <hr />
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha_inicio, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha_inicio)
+                @Html.TextBoxFor(model => model.fecha_inicio, new { type = "date" })
                 @Html.ValidationMessageFor(model => model.fecha_inicio)
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.fecha_fin, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha_fin)
+                @Html.TextBoxFor(model => model.fecha_fin, new { type = "date" })
                 @Html.ValidationMessageFor(model => model.fecha_fin)
             </div>
         </div>
@@ -49,23 +49,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Usuario_id, "Usuario_id", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Usuario_id", String.Empty)
-                @Html.ValidationMessageFor(model => model.Usuario_id)
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver", "Index")
 </div>
 
 @section Scripts {

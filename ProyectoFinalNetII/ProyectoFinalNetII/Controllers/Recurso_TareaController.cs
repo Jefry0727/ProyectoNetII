@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using Default1System.Net;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
@@ -54,9 +54,16 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Recurso_Tarea.Add(recurso_tarea);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
+                    db.createRecursoTarea(recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }  
             }
 
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
@@ -92,8 +99,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(recurso_tarea).State = EntityState.Modified;
-                db.SaveChanges();
+                db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
+                db.editarRecursoTarea(recurso_tarea.id, recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
                 return RedirectToAction("Index");
             }
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
@@ -122,9 +129,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Recurso_Tarea recurso_tarea = db.Recurso_Tarea.Find(id);
-            db.Recurso_Tarea.Remove(recurso_tarea);
-            db.SaveChanges();
+            db.eliminarRecursoTarea(id);
             return RedirectToAction("Index");
         }
 

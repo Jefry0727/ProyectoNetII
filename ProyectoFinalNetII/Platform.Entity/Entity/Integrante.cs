@@ -11,6 +11,7 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Integrante
     {
@@ -18,10 +19,14 @@ namespace Platform.Entity.Entity
         {
             this.Actividad = new HashSet<Actividad>();
         }
-    
+
+        [DisplayName("Integrante_Id")]
         public int id { get; set; }
+        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
+        [DisplayName("Cargo")]
         public int Cargo_id { get; set; }
+        [DisplayName("Integrante")]
         public int Usuario_id { get; set; }
     
         public virtual ICollection<Actividad> Actividad { get; set; }

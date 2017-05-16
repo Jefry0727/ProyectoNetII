@@ -11,13 +11,18 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Recurso_Tarea
     {
         public int id { get; set; }
+        [DisplayName("Cantidad")]
         public int cantidad { get; set; }
+        [DisplayName("Actividad")]
         public int Actividad_id { get; set; }
+        [DisplayName("Tarea")]
         public int Tarea_id { get; set; }
+        [DisplayName("Recurso")]
         public int Recurso_id { get; set; }
     
         public virtual Actividad Actividad { get; set; }

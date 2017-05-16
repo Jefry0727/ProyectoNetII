@@ -11,6 +11,7 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Cargo
     {
@@ -18,11 +19,15 @@ namespace Platform.Entity.Entity
         {
             this.Integrante = new HashSet<Integrante>();
         }
-    
+
         public int id { get; set; }
+        [DisplayName("Nombre")]
         public string nombre { get; set; }
+        [DisplayName("Salario")]
         public double salario { get; set; }
+        [DisplayName("Horario")]
         public string horario { get; set; }
+        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
     
         public virtual Proyecto Proyecto { get; set; }

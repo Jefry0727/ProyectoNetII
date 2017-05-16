@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
@@ -18,13 +18,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    @using Microsoft.AspNet.Identity
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Datos Director", "Index", "usuario")</li>
+                        <li>@Html.ActionLink("Gestion Proyectos", "Index", "proyecto")</li>
+                        //<li>@Html.ActionLink("Gestion Tareas", "Index", "tarea")</li>
+                        //<li>@Html.ActionLink("Gestion Recurso-Tarea", "Index", "recursoTarea")</li>
+                        //<li>@Html.ActionLink("Gestion Actividades", "Index", "actividad")</li>
+                        <li>@Html.ActionLink("Gestion Cargos", "Index", "cargo")</li>
+                        //<li>@Html.ActionLink("Gestion Reunion", "Index", "reunion")</li>
+                        //<li>@Html.ActionLink("Gestion Recurso", "Index", "recurso")</li>
+                        //<li>@Html.ActionLink("Gestion Integrantes", "Index", "integrante")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

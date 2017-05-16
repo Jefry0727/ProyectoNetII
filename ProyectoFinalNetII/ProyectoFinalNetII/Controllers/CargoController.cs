@@ -52,8 +52,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Cargo.Add(cargo);
-                db.SaveChanges();
+                db.crearCargo(cargo.nombre, cargo.salario, cargo.horario, cargo.Proyecto_id);
                 return RedirectToAction("Index");
             }
 

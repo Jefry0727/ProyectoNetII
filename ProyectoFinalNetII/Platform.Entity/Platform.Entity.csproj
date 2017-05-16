@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DAO\daoDirector.cs" />
     <Compile Include="Entity\Actividad.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

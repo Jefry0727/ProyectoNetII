@@ -7,12 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class UsuarioController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector daoDir = new daoDirector();
+        bool resp;
 
         // GET: /Usuario/
         public ActionResult Index()
@@ -52,9 +55,21 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Usuario.Add(usuario);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                String usu = (string)(Session["Usuario"]);
+                String pass = (string)(Session["Contrasenia"]);
+
+                resp = daoDir.verificarUsuario(usu);
+
+                if (resp)
+                {
+                    db.registrarUsuDirector(usuario.cedula, usuario.nombre, usuario.apellido, usuario.edad,
+                    usuario.telefono, usu, pass, 1, usuario.correo);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.Tipo_Usuario = new SelectList(db.Tipo_Usuario, "id", "tipo", usuario.Tipo_Usuario);

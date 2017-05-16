@@ -54,8 +54,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Integrante.Add(integrante);
-                db.SaveChanges();
+                db.crearIntegrante(integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
                 return RedirectToAction("Index");
             }
 
@@ -92,8 +91,7 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(integrante).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarIntegrante(integrante.id, integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
                 return RedirectToAction("Index");
             }
             ViewBag.Cargo_id = new SelectList(db.Cargo, "id", "nombre", integrante.Cargo_id);
@@ -122,9 +120,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Integrante integrante = db.Integrante.Find(id);
-            db.Integrante.Remove(integrante);
-            db.SaveChanges();
+            db.eliminarIntegrante(id);
             return RedirectToAction("Index");
         }
 

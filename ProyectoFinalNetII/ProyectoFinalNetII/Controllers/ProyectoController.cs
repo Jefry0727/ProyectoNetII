@@ -7,12 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class ProyectoController : Controller
     {
         private EntityEntities db = new EntityEntities();
+
+        private daoDirector dao = new daoDirector();
+        
+        int idDire;
+        List<Proyecto> proys = new List<Proyecto>();
 
         // GET: /Proyecto/
         public ActionResult Index()
@@ -52,9 +58,18 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Proyecto.Add(proyecto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                String usu = (string)(Session["Usuario"]);
+                idDire = dao.proyectosDirector(usu);
+                if(idDire != 0){
+                    db.crearProyecto(proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
+                    proyecto.etapa, idDire);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             ViewBag.Usuario_id = new SelectList(db.Usuario, "id", "cedula", proyecto.Usuario_id);
@@ -86,8 +101,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(proyecto).State = EntityState.Modified;
-                db.SaveChanges();
+                db.editarProyecto(proyecto.id, proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
+                    proyecto.etapa, proyecto.Usuario_id);
                 return RedirectToAction("Index");
             }
             ViewBag.Usuario_id = new SelectList(db.Usuario, "id", "cedula", proyecto.Usuario_id);
@@ -114,9 +129,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Proyecto proyecto = db.Proyecto.Find(id);
-            db.Proyecto.Remove(proyecto);
-            db.SaveChanges();
+            db.eliminarProyecto(id);
             return RedirectToAction("Index");
         }
 
