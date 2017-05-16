@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="EntityEntities">
+    <EntitySetMapping Name="Actividad">
+      <EntityTypeMapping TypeName="EntityModel.Actividad">
+        <MappingFragment StoreEntitySet="Actividad">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+          <ScalarProperty Name="Integrante_id" ColumnName="Integrante_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cargo">
+      <EntityTypeMapping TypeName="EntityModel.Cargo">
+        <MappingFragment StoreEntitySet="Cargo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="salario" ColumnName="salario" />
+          <ScalarProperty Name="horario" ColumnName="horario" />
+          <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Integrante">
+      <EntityTypeMapping TypeName="EntityModel.Integrante">
+        <MappingFragment StoreEntitySet="Integrante">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+          <ScalarProperty Name="Cargo_id" ColumnName="Cargo_id" />
+          <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Proyecto">
+      <EntityTypeMapping TypeName="EntityModel.Proyecto">
+        <MappingFragment StoreEntitySet="Proyecto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="etapa" ColumnName="etapa" />
+          <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Recurso">
+      <EntityTypeMapping TypeName="EntityModel.Recurso">
+        <MappingFragment StoreEntitySet="Recurso">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Recurso_Tarea">
+      <EntityTypeMapping TypeName="EntityModel.Recurso_Tarea">
+        <MappingFragment StoreEntitySet="Recurso_Tarea">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="Actividad_id" ColumnName="Actividad_id" />
+          <ScalarProperty Name="Tarea_id" ColumnName="Tarea_id" />
+          <ScalarProperty Name="Recurso_id" ColumnName="Recurso_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reunion">
+      <EntityTypeMapping TypeName="EntityModel.Reunion">
+        <MappingFragment StoreEntitySet="Reunion">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lugar" ColumnName="lugar" />
+          <ScalarProperty Name="tematica" ColumnName="tematica" />
+          <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tarea">
+      <EntityTypeMapping TypeName="EntityModel.Tarea">
+        <MappingFragment StoreEntitySet="Tarea">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_Usuario">
+      <EntityTypeMapping TypeName="EntityModel.Tipo_Usuario">
+        <MappingFragment StoreEntitySet="Tipo_Usuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="EntityModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="edad" ColumnName="edad" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="usuario1" ColumnName="usuario" />
+          <ScalarProperty Name="contrasenia" ColumnName="contrasenia" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="Tipo_Usuario" ColumnName="Tipo_Usuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="crearActividad" FunctionName="EntityModel.Store.crearActividad" />
+    <FunctionImportMapping FunctionImportName="crearCargo" FunctionName="EntityModel.Store.crearCargo" />
+    <FunctionImportMapping FunctionImportName="crearIntegrante" FunctionName="EntityModel.Store.crearIntegrante" />
+    <FunctionImportMapping FunctionImportName="crearProyecto" FunctionName="EntityModel.Store.crearProyecto" />
+    <FunctionImportMapping FunctionImportName="crearRecurso" FunctionName="EntityModel.Store.crearRecurso" />
+    <FunctionImportMapping FunctionImportName="crearReunion" FunctionName="EntityModel.Store.crearReunion" />
+    <FunctionImportMapping FunctionImportName="crearTarea" FunctionName="EntityModel.Store.crearTarea" />
+    <FunctionImportMapping FunctionImportName="createRecursoTarea" FunctionName="EntityModel.Store.createRecursoTarea" />
+    <FunctionImportMapping FunctionImportName="descontarRecurso" FunctionName="EntityModel.Store.descontarRecurso" />
+    <FunctionImportMapping FunctionImportName="editarActividad" FunctionName="EntityModel.Store.editarActividad" />
+    <FunctionImportMapping FunctionImportName="editarIntegrante" FunctionName="EntityModel.Store.editarIntegrante" />
+    <FunctionImportMapping FunctionImportName="editarProyecto" FunctionName="EntityModel.Store.editarProyecto" />
+    <FunctionImportMapping FunctionImportName="editarRecurso" FunctionName="EntityModel.Store.editarRecurso" />
+    <FunctionImportMapping FunctionImportName="editarRecursoTarea" FunctionName="EntityModel.Store.editarRecursoTarea" />
+    <FunctionImportMapping FunctionImportName="editarReunion" FunctionName="EntityModel.Store.editarReunion" />
+    <FunctionImportMapping FunctionImportName="editarTarea" FunctionName="EntityModel.Store.editarTarea" />
+    <FunctionImportMapping FunctionImportName="eliminarActividad" FunctionName="EntityModel.Store.eliminarActividad" />
+    <FunctionImportMapping FunctionImportName="eliminarIntegrante" FunctionName="EntityModel.Store.eliminarIntegrante" />
+    <FunctionImportMapping FunctionImportName="eliminarProyecto" FunctionName="EntityModel.Store.eliminarProyecto" />
+    <FunctionImportMapping FunctionImportName="eliminarRecurso" FunctionName="EntityModel.Store.eliminarRecurso" />
+    <FunctionImportMapping FunctionImportName="eliminarRecursoTarea" FunctionName="EntityModel.Store.eliminarRecursoTarea" />
+    <FunctionImportMapping FunctionImportName="eliminarReunion" FunctionName="EntityModel.Store.eliminarReunion" />
+    <FunctionImportMapping FunctionImportName="eliminarTarea" FunctionName="EntityModel.Store.eliminarTarea" />
+    <FunctionImportMapping FunctionImportName="registrarUsuDirector" FunctionName="EntityModel.Store.registrarUsuDirector" />
+  </EntityContainerMapping>
+</Mapping>

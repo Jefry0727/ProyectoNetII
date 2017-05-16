@@ -1,0 +1,1087 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="fecha_fin" Type="date" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+          <Property Name="Proyecto_id" Type="int" Nullable="false" />
+          <Property Name="Integrante_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="salario" Type="float" Nullable="false" />
+          <Property Name="horario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Proyecto_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Integrante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Proyecto_id" Type="int" Nullable="false" />
+          <Property Name="Cargo_id" Type="int" Nullable="false" />
+          <Property Name="Usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proyecto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="fecha_fin" Type="date" Nullable="false" />
+          <Property Name="etapa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recurso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="ubicacion" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recurso_Tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="Actividad_id" Type="int" Nullable="false" />
+          <Property Name="Tarea_id" Type="int" Nullable="false" />
+          <Property Name="Recurso_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reunion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lugar" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tematica" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Proyecto_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="fecha_fin" Type="date" Nullable="false" />
+          <Property Name="porcentaje" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cedula" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="edad" Type="int" Nullable="false" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasenia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="correo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo_Usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Actividad_Integrante_FK">
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Integrante">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="Integrante_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Actividad_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cargo_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Cargo_FK">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Cargo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Usuario_FK">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Actividad_FK">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Actividad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Recurso_FK">
+          <End Role="Recurso" Type="Self.Recurso" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recurso">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Recurso_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Tarea_FK">
+          <End Role="Tarea" Type="Self.Tarea" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Tarea_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reunion_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Reunion" Type="Self.Reunion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reunion">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TipoUsu_Usuario_FK">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Tipo_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Usuario_Proyecto_FK">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Proyecto">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="crearActividad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+          <Parameter Name="integranteId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="crearCargo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="salario" Type="float" Mode="In" />
+          <Parameter Name="horario" Type="nvarchar" Mode="In" />
+          <Parameter Name="idPro" Type="int" Mode="In" />
+        </Function>
+        <Function Name="crearIntegrante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+          <Parameter Name="cargoId" Type="int" Mode="In" />
+          <Parameter Name="usuarioId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="crearProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="etapa" Type="nvarchar" Mode="In" />
+          <Parameter Name="directorId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="crearRecurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="ubicacion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="crearReunion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lugar" Type="nvarchar" Mode="In" />
+          <Parameter Name="tematica" Type="nvarchar" Mode="In" />
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="crearTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="porcentaje" Type="nvarchar" Mode="In" />
+          <Parameter Name="estado" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="createRecursoTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="actividadId" Type="int" Mode="In" />
+          <Parameter Name="tareaId" Type="int" Mode="In" />
+          <Parameter Name="recursoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="descontarRecurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="recursoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarActividad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+          <Parameter Name="integranteId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarIntegrante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+          <Parameter Name="cargoId" Type="int" Mode="In" />
+          <Parameter Name="usuarioId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="etapa" Type="nvarchar" Mode="In" />
+          <Parameter Name="directorId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarRecurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="ubicacion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="editarRecursoTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="actividadId" Type="int" Mode="In" />
+          <Parameter Name="tareaId" Type="int" Mode="In" />
+          <Parameter Name="recursoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarReunion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="lugar" Type="nvarchar" Mode="In" />
+          <Parameter Name="tematica" Type="nvarchar" Mode="In" />
+          <Parameter Name="proyectoId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="editarTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="fecha_ini" Type="date" Mode="In" />
+          <Parameter Name="fecha_fin" Type="date" Mode="In" />
+          <Parameter Name="porcentaje" Type="nvarchar" Mode="In" />
+          <Parameter Name="estado" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="eliminarActividad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarIntegrante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarProyecto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarRecurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarRecursoTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarReunion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="eliminarTarea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="registrarUsuDirector" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cedula" Type="nvarchar" Mode="In" />
+          <Parameter Name="nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="apellido" Type="nvarchar" Mode="In" />
+          <Parameter Name="edad" Type="int" Mode="In" />
+          <Parameter Name="telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="usuario" Type="nvarchar" Mode="In" />
+          <Parameter Name="contra" Type="nvarchar" Mode="In" />
+          <Parameter Name="tipoUsuario" Type="int" Mode="In" />
+          <Parameter Name="correo" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EntityModelStoreContainer">
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Integrante" EntityType="Self.Integrante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proyecto" EntityType="Self.Proyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recurso" EntityType="Self.Recurso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recurso_Tarea" EntityType="Self.Recurso_Tarea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reunion" EntityType="Self.Reunion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarea" EntityType="Self.Tarea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Usuario" EntityType="Self.Tipo_Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Actividad_Integrante_FK" Association="Self.Actividad_Integrante_FK">
+            <End Role="Integrante" EntitySet="Integrante" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="Actividad_Proyecto_FK" Association="Self.Actividad_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="Cargo_Proyecto_FK" Association="Self.Cargo_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Cargo_FK" Association="Self.Integrante_Cargo_FK">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Proyecto_FK" Association="Self.Integrante_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Usuario_FK" Association="Self.Integrante_Usuario_FK">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Actividad_FK" Association="Self.Recurso_Tarea_Actividad_FK">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Recurso_FK" Association="Self.Recurso_Tarea_Recurso_FK">
+            <End Role="Recurso" EntitySet="Recurso" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Tarea_FK" Association="Self.Recurso_Tarea_Tarea_FK">
+            <End Role="Tarea" EntitySet="Tarea" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="Reunion_Proyecto_FK" Association="Self.Reunion_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Reunion" EntitySet="Reunion" />
+          </AssociationSet>
+          <AssociationSet Name="TipoUsu_Usuario_FK" Association="Self.TipoUsu_Usuario_FK">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="Usuario_Proyecto_FK" Association="Self.Usuario_Proyecto_FK">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proyecto" EntitySet="Proyecto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Actividad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Proyecto_id" Type="Int32" Nullable="false" />
+          <Property Name="Integrante_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Integrante" Relationship="Self.Actividad_Integrante_FK" FromRole="Actividad" ToRole="Integrante" />
+          <NavigationProperty Name="Proyecto" Relationship="Self.Actividad_Proyecto_FK" FromRole="Actividad" ToRole="Proyecto" />
+          <NavigationProperty Name="Recurso_Tarea" Relationship="Self.Recurso_Tarea_Actividad_FK" FromRole="Actividad" ToRole="Recurso_Tarea" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salario" Type="Double" Nullable="false" />
+          <Property Name="horario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Proyecto_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Proyecto" Relationship="Self.Cargo_Proyecto_FK" FromRole="Cargo" ToRole="Proyecto" />
+          <NavigationProperty Name="Integrante" Relationship="Self.Integrante_Cargo_FK" FromRole="Cargo" ToRole="Integrante" />
+        </EntityType>
+        <EntityType Name="Integrante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Proyecto_id" Type="Int32" Nullable="false" />
+          <Property Name="Cargo_id" Type="Int32" Nullable="false" />
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.Actividad_Integrante_FK" FromRole="Integrante" ToRole="Actividad" />
+          <NavigationProperty Name="Cargo" Relationship="Self.Integrante_Cargo_FK" FromRole="Integrante" ToRole="Cargo" />
+          <NavigationProperty Name="Proyecto" Relationship="Self.Integrante_Proyecto_FK" FromRole="Integrante" ToRole="Proyecto" />
+          <NavigationProperty Name="Usuario" Relationship="Self.Integrante_Usuario_FK" FromRole="Integrante" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Proyecto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.Actividad_Proyecto_FK" FromRole="Proyecto" ToRole="Actividad" />
+          <NavigationProperty Name="Cargo" Relationship="Self.Cargo_Proyecto_FK" FromRole="Proyecto" ToRole="Cargo" />
+          <NavigationProperty Name="Integrante" Relationship="Self.Integrante_Proyecto_FK" FromRole="Proyecto" ToRole="Integrante" />
+          <NavigationProperty Name="Reunion" Relationship="Self.Reunion_Proyecto_FK" FromRole="Proyecto" ToRole="Reunion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.Usuario_Proyecto_FK" FromRole="Proyecto" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Recurso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="ubicacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Recurso_Tarea" Relationship="Self.Recurso_Tarea_Recurso_FK" FromRole="Recurso" ToRole="Recurso_Tarea" />
+        </EntityType>
+        <EntityType Name="Recurso_Tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Actividad_id" Type="Int32" Nullable="false" />
+          <Property Name="Tarea_id" Type="Int32" Nullable="false" />
+          <Property Name="Recurso_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Actividad" Relationship="Self.Recurso_Tarea_Actividad_FK" FromRole="Recurso_Tarea" ToRole="Actividad" />
+          <NavigationProperty Name="Recurso" Relationship="Self.Recurso_Tarea_Recurso_FK" FromRole="Recurso_Tarea" ToRole="Recurso" />
+          <NavigationProperty Name="Tarea" Relationship="Self.Recurso_Tarea_Tarea_FK" FromRole="Recurso_Tarea" ToRole="Tarea" />
+        </EntityType>
+        <EntityType Name="Reunion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lugar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tematica" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Proyecto_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Proyecto" Relationship="Self.Reunion_Proyecto_FK" FromRole="Reunion" ToRole="Proyecto" />
+        </EntityType>
+        <EntityType Name="Tarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="porcentaje" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Recurso_Tarea" Relationship="Self.Recurso_Tarea_Tarea_FK" FromRole="Tarea" ToRole="Recurso_Tarea" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.TipoUsu_Usuario_FK" FromRole="Tipo_Usuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="edad" Type="Int32" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contrasenia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tipo_Usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Integrante" Relationship="Self.Integrante_Usuario_FK" FromRole="Usuario" ToRole="Integrante" />
+          <NavigationProperty Name="Proyecto" Relationship="Self.Usuario_Proyecto_FK" FromRole="Usuario" ToRole="Proyecto" />
+          <NavigationProperty Name="Tipo_Usuario1" Relationship="Self.TipoUsu_Usuario_FK" FromRole="Usuario" ToRole="Tipo_Usuario" />
+        </EntityType>
+        <Association Name="Actividad_Integrante_FK">
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Integrante">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="Integrante_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Actividad_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Actividad">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Actividad_FK">
+          <End Role="Actividad" Type="Self.Actividad" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actividad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Actividad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cargo_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cargo">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Cargo_FK">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Cargo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Integrante_Usuario_FK">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Integrante" Type="Self.Integrante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Integrante">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reunion_Proyecto_FK">
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="1" />
+          <End Role="Reunion" Type="Self.Reunion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proyecto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reunion">
+              <PropertyRef Name="Proyecto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Usuario_Proyecto_FK">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Proyecto" Type="Self.Proyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Proyecto">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Recurso_FK">
+          <End Role="Recurso" Type="Self.Recurso" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recurso">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Recurso_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Recurso_Tarea_Tarea_FK">
+          <End Role="Tarea" Type="Self.Tarea" Multiplicity="1" />
+          <End Role="Recurso_Tarea" Type="Self.Recurso_Tarea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recurso_Tarea">
+              <PropertyRef Name="Tarea_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TipoUsu_Usuario_FK">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Tipo_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EntityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actividad" EntityType="Self.Actividad" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
+          <EntitySet Name="Integrante" EntityType="Self.Integrante" />
+          <EntitySet Name="Proyecto" EntityType="Self.Proyecto" />
+          <EntitySet Name="Recurso" EntityType="Self.Recurso" />
+          <EntitySet Name="Recurso_Tarea" EntityType="Self.Recurso_Tarea" />
+          <EntitySet Name="Reunion" EntityType="Self.Reunion" />
+          <EntitySet Name="Tarea" EntityType="Self.Tarea" />
+          <EntitySet Name="Tipo_Usuario" EntityType="Self.Tipo_Usuario" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="Actividad_Integrante_FK" Association="Self.Actividad_Integrante_FK">
+            <End Role="Integrante" EntitySet="Integrante" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="Actividad_Proyecto_FK" Association="Self.Actividad_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Actividad" EntitySet="Actividad" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Actividad_FK" Association="Self.Recurso_Tarea_Actividad_FK">
+            <End Role="Actividad" EntitySet="Actividad" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="Cargo_Proyecto_FK" Association="Self.Cargo_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Cargo" EntitySet="Cargo" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Cargo_FK" Association="Self.Integrante_Cargo_FK">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Proyecto_FK" Association="Self.Integrante_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Integrante_Usuario_FK" Association="Self.Integrante_Usuario_FK">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Integrante" EntitySet="Integrante" />
+          </AssociationSet>
+          <AssociationSet Name="Reunion_Proyecto_FK" Association="Self.Reunion_Proyecto_FK">
+            <End Role="Proyecto" EntitySet="Proyecto" />
+            <End Role="Reunion" EntitySet="Reunion" />
+          </AssociationSet>
+          <AssociationSet Name="Usuario_Proyecto_FK" Association="Self.Usuario_Proyecto_FK">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proyecto" EntitySet="Proyecto" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Recurso_FK" Association="Self.Recurso_Tarea_Recurso_FK">
+            <End Role="Recurso" EntitySet="Recurso" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="Recurso_Tarea_Tarea_FK" Association="Self.Recurso_Tarea_Tarea_FK">
+            <End Role="Tarea" EntitySet="Tarea" />
+            <End Role="Recurso_Tarea" EntitySet="Recurso_Tarea" />
+          </AssociationSet>
+          <AssociationSet Name="TipoUsu_Usuario_FK" Association="Self.TipoUsu_Usuario_FK">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <FunctionImport Name="crearActividad">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+            <Parameter Name="integranteId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="crearCargo">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="salario" Mode="In" Type="Double" />
+            <Parameter Name="horario" Mode="In" Type="String" />
+            <Parameter Name="idPro" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="crearIntegrante">
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+            <Parameter Name="cargoId" Mode="In" Type="Int32" />
+            <Parameter Name="usuarioId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="crearProyecto">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="etapa" Mode="In" Type="String" />
+            <Parameter Name="directorId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="crearRecurso">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="ubicacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="crearReunion">
+            <Parameter Name="lugar" Mode="In" Type="String" />
+            <Parameter Name="tematica" Mode="In" Type="String" />
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="crearTarea">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="porcentaje" Mode="In" Type="String" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="createRecursoTarea">
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="actividadId" Mode="In" Type="Int32" />
+            <Parameter Name="tareaId" Mode="In" Type="Int32" />
+            <Parameter Name="recursoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="descontarRecurso">
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="recursoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarActividad">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+            <Parameter Name="integranteId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarIntegrante">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+            <Parameter Name="cargoId" Mode="In" Type="Int32" />
+            <Parameter Name="usuarioId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarProyecto">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="etapa" Mode="In" Type="String" />
+            <Parameter Name="directorId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarRecurso">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="ubicacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="editarRecursoTarea">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="actividadId" Mode="In" Type="Int32" />
+            <Parameter Name="tareaId" Mode="In" Type="Int32" />
+            <Parameter Name="recursoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarReunion">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="lugar" Mode="In" Type="String" />
+            <Parameter Name="tematica" Mode="In" Type="String" />
+            <Parameter Name="proyectoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="editarTarea">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="porcentaje" Mode="In" Type="String" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarActividad">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarIntegrante">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarProyecto">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarRecurso">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarRecursoTarea">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarReunion">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminarTarea">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="registrarUsuDirector">
+            <Parameter Name="cedula" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="edad" Mode="In" Type="Int32" />
+            <Parameter Name="telefono" Mode="In" Type="String" />
+            <Parameter Name="usuario" Mode="In" Type="String" />
+            <Parameter Name="contra" Mode="In" Type="String" />
+            <Parameter Name="tipoUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="correo" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="EntityEntities">
+          <EntitySetMapping Name="Actividad">
+            <EntityTypeMapping TypeName="EntityModel.Actividad">
+              <MappingFragment StoreEntitySet="Actividad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+                <ScalarProperty Name="Integrante_id" ColumnName="Integrante_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargo">
+            <EntityTypeMapping TypeName="EntityModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="salario" ColumnName="salario" />
+                <ScalarProperty Name="horario" ColumnName="horario" />
+                <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Integrante">
+            <EntityTypeMapping TypeName="EntityModel.Integrante">
+              <MappingFragment StoreEntitySet="Integrante">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+                <ScalarProperty Name="Cargo_id" ColumnName="Cargo_id" />
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proyecto">
+            <EntityTypeMapping TypeName="EntityModel.Proyecto">
+              <MappingFragment StoreEntitySet="Proyecto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="etapa" ColumnName="etapa" />
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recurso">
+            <EntityTypeMapping TypeName="EntityModel.Recurso">
+              <MappingFragment StoreEntitySet="Recurso">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recurso_Tarea">
+            <EntityTypeMapping TypeName="EntityModel.Recurso_Tarea">
+              <MappingFragment StoreEntitySet="Recurso_Tarea">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="Actividad_id" ColumnName="Actividad_id" />
+                <ScalarProperty Name="Tarea_id" ColumnName="Tarea_id" />
+                <ScalarProperty Name="Recurso_id" ColumnName="Recurso_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reunion">
+            <EntityTypeMapping TypeName="EntityModel.Reunion">
+              <MappingFragment StoreEntitySet="Reunion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="lugar" ColumnName="lugar" />
+                <ScalarProperty Name="tematica" ColumnName="tematica" />
+                <ScalarProperty Name="Proyecto_id" ColumnName="Proyecto_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarea">
+            <EntityTypeMapping TypeName="EntityModel.Tarea">
+              <MappingFragment StoreEntitySet="Tarea">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="porcentaje" ColumnName="porcentaje" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Usuario">
+            <EntityTypeMapping TypeName="EntityModel.Tipo_Usuario">
+              <MappingFragment StoreEntitySet="Tipo_Usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="EntityModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="usuario1" ColumnName="usuario" />
+                <ScalarProperty Name="contrasenia" ColumnName="contrasenia" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="Tipo_Usuario" ColumnName="Tipo_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="crearActividad" FunctionName="EntityModel.Store.crearActividad" />
+          <FunctionImportMapping FunctionImportName="crearCargo" FunctionName="EntityModel.Store.crearCargo" />
+          <FunctionImportMapping FunctionImportName="crearIntegrante" FunctionName="EntityModel.Store.crearIntegrante" />
+          <FunctionImportMapping FunctionImportName="crearProyecto" FunctionName="EntityModel.Store.crearProyecto" />
+          <FunctionImportMapping FunctionImportName="crearRecurso" FunctionName="EntityModel.Store.crearRecurso" />
+          <FunctionImportMapping FunctionImportName="crearReunion" FunctionName="EntityModel.Store.crearReunion" />
+          <FunctionImportMapping FunctionImportName="crearTarea" FunctionName="EntityModel.Store.crearTarea" />
+          <FunctionImportMapping FunctionImportName="createRecursoTarea" FunctionName="EntityModel.Store.createRecursoTarea" />
+          <FunctionImportMapping FunctionImportName="descontarRecurso" FunctionName="EntityModel.Store.descontarRecurso" />
+          <FunctionImportMapping FunctionImportName="editarActividad" FunctionName="EntityModel.Store.editarActividad" />
+          <FunctionImportMapping FunctionImportName="editarIntegrante" FunctionName="EntityModel.Store.editarIntegrante" />
+          <FunctionImportMapping FunctionImportName="editarProyecto" FunctionName="EntityModel.Store.editarProyecto" />
+          <FunctionImportMapping FunctionImportName="editarRecurso" FunctionName="EntityModel.Store.editarRecurso" />
+          <FunctionImportMapping FunctionImportName="editarRecursoTarea" FunctionName="EntityModel.Store.editarRecursoTarea" />
+          <FunctionImportMapping FunctionImportName="editarReunion" FunctionName="EntityModel.Store.editarReunion" />
+          <FunctionImportMapping FunctionImportName="editarTarea" FunctionName="EntityModel.Store.editarTarea" />
+          <FunctionImportMapping FunctionImportName="eliminarActividad" FunctionName="EntityModel.Store.eliminarActividad" />
+          <FunctionImportMapping FunctionImportName="eliminarIntegrante" FunctionName="EntityModel.Store.eliminarIntegrante" />
+          <FunctionImportMapping FunctionImportName="eliminarProyecto" FunctionName="EntityModel.Store.eliminarProyecto" />
+          <FunctionImportMapping FunctionImportName="eliminarRecurso" FunctionName="EntityModel.Store.eliminarRecurso" />
+          <FunctionImportMapping FunctionImportName="eliminarRecursoTarea" FunctionName="EntityModel.Store.eliminarRecursoTarea" />
+          <FunctionImportMapping FunctionImportName="eliminarReunion" FunctionName="EntityModel.Store.eliminarReunion" />
+          <FunctionImportMapping FunctionImportName="eliminarTarea" FunctionName="EntityModel.Store.eliminarTarea" />
+          <FunctionImportMapping FunctionImportName="registrarUsuDirector" FunctionName="EntityModel.Store.registrarUsuDirector" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

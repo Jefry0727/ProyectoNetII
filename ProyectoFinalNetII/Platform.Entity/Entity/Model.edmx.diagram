@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="333b1bf6f33948fb9c18edd2528852fd" Name="Diagram1">
+        <EntityTypeShape EntityType="EntityModel.Actividad" Width="1.5" PointX="12" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Cargo" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Integrante" Width="1.5" PointX="9.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Proyecto" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Recurso" Width="1.5" PointX="12" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Recurso_Tarea" Width="1.5" PointX="14.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Reunion" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Tarea" Width="1.5" PointX="12" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Tipo_Usuario" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Usuario" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="EntityModel.Actividad_Integrante_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Actividad_Proyecto_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Recurso_Tarea_Actividad_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Cargo_Proyecto_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Integrante_Cargo_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Integrante_Proyecto_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Integrante_Usuario_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Reunion_Proyecto_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Usuario_Proyecto_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Recurso_Tarea_Recurso_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.Recurso_Tarea_Tarea_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.TipoUsu_Usuario_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
