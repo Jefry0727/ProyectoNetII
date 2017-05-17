@@ -38,6 +38,19 @@ namespace Platform.Entity.Entity
         public virtual DbSet<Tipo_Usuario> Tipo_Usuario { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     
+        public virtual int aumentarRecurso(Nullable<int> cantidad, Nullable<int> recursoId)
+        {
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var recursoIdParameter = recursoId.HasValue ?
+                new ObjectParameter("recursoId", recursoId) :
+                new ObjectParameter("recursoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("aumentarRecurso", cantidadParameter, recursoIdParameter);
+        }
+    
         public virtual int crearActividad(string nombre, Nullable<System.DateTime> fecha_ini, Nullable<System.DateTime> fecha_fin, string descripcion, Nullable<int> proyectoId, Nullable<int> integranteId)
         {
             var nombreParameter = nombre != null ?

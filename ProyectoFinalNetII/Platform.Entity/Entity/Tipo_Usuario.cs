@@ -14,6 +14,7 @@ namespace Platform.Entity.Entity
     
     public partial class Tipo_Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tipo_Usuario()
         {
             this.Usuario = new HashSet<Usuario>();
@@ -22,6 +23,7 @@ namespace Platform.Entity.Entity
         public int id { get; set; }
         public string tipo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

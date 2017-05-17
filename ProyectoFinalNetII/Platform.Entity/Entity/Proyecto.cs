@@ -11,10 +11,10 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     
     public partial class Proyecto
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Proyecto()
         {
             this.Actividad = new HashSet<Actividad>();
@@ -22,22 +22,21 @@ namespace Platform.Entity.Entity
             this.Integrante = new HashSet<Integrante>();
             this.Reunion = new HashSet<Reunion>();
         }
-
+    
         public int id { get; set; }
-        [DisplayName("Nombre")]
         public string nombre { get; set; }
-        [DisplayName("Fecha Inicio")]
         public System.DateTime fecha_inicio { get; set; }
-        [DisplayName("Fecha Fin")]
         public System.DateTime fecha_fin { get; set; }
-        [DisplayName("Etapa")]
         public string etapa { get; set; }
-        [DisplayName("Usuario")]
         public int Usuario_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Actividad> Actividad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cargo> Cargo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Integrante> Integrante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reunion> Reunion { get; set; }
         public virtual Usuario Usuario { get; set; }
     }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Actividad">
           <Key>
             <PropertyRef Name="id" />
@@ -252,6 +252,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="aumentarRecurso" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+          <Parameter Name="recursoId" Type="int" Mode="In" />
+        </Function>
         <Function Name="crearActividad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="fecha_ini" Type="date" Mode="In" />
@@ -451,7 +455,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Actividad">
           <Key>
             <PropertyRef Name="id" />
@@ -782,6 +786,10 @@
             <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <FunctionImport Name="aumentarRecurso">
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="recursoId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="crearActividad">
             <Parameter Name="nombre" Mode="In" Type="String" />
             <Parameter Name="fecha_ini" Mode="In" Type="DateTime" />
@@ -1037,6 +1045,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="aumentarRecurso" FunctionName="EntityModel.Store.aumentarRecurso" />
           <FunctionImportMapping FunctionImportName="crearActividad" FunctionName="EntityModel.Store.crearActividad" />
           <FunctionImportMapping FunctionImportName="crearCargo" FunctionName="EntityModel.Store.crearCargo" />
           <FunctionImportMapping FunctionImportName="crearIntegrante" FunctionName="EntityModel.Store.crearIntegrante" />

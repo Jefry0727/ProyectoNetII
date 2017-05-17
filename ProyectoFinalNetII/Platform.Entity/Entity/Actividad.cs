@@ -11,31 +11,26 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     
     public partial class Actividad
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Actividad()
         {
             this.Recurso_Tarea = new HashSet<Recurso_Tarea>();
         }
-
+    
         public int id { get; set; }
-        [DisplayName("Nombre")]
         public string nombre { get; set; }
-        [DisplayName("Fecha Inicio")]
         public System.DateTime fecha_inicio { get; set; }
-        [DisplayName("Fecha Fin")]
         public System.DateTime fecha_fin { get; set; }
-        [DisplayName("Descripcion")]
         public string descripcion { get; set; }
-        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
-        [DisplayName("Integreante")]
         public int Integrante_id { get; set; }
     
         public virtual Integrante Integrante { get; set; }
         public virtual Proyecto Proyecto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recurso_Tarea> Recurso_Tarea { get; set; }
     }
 }

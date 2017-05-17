@@ -11,37 +11,30 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     
     public partial class Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
             this.Integrante = new HashSet<Integrante>();
             this.Proyecto = new HashSet<Proyecto>();
         }
-
-        public int id { get; set; }
-        [DisplayName("Cedula")]
-        public string cedula { get; set; }
-        [DisplayName("Nombre")]
-        public string nombre { get; set; }
-        [DisplayName("Apellido")]
-        public string apellido { get; set; }
-        [DisplayName("Edad")]
-        public int edad { get; set; }
-        [DisplayName("Telefono")]
-        public string telefono { get; set; }
-        [DisplayName("Usuario")]
-        public string usuario1 { get; set; }
-        [DisplayName("Contraseña")]
-        public string contrasenia { get; set; }
-        [DisplayName("Tipo Usuario")]
-        public int Tipo_Usuario { get; set; }
-        [DisplayName("Correo")]
-        public string correo { get; set; }
     
+        public int id { get; set; }
+        public string cedula { get; set; }
+        public string nombre { get; set; }
+        public string apellido { get; set; }
+        public int edad { get; set; }
+        public string telefono { get; set; }
+        public string usuario1 { get; set; }
+        public string contrasenia { get; set; }
+        public string correo { get; set; }
+        public int Tipo_Usuario { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Integrante> Integrante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proyecto> Proyecto { get; set; }
         public virtual Tipo_Usuario Tipo_Usuario1 { get; set; }
     }

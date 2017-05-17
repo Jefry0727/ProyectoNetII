@@ -11,26 +11,23 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     
     public partial class Cargo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cargo()
         {
             this.Integrante = new HashSet<Integrante>();
         }
-
+    
         public int id { get; set; }
-        [DisplayName("Nombre")]
         public string nombre { get; set; }
-        [DisplayName("Salario")]
         public double salario { get; set; }
-        [DisplayName("Horario")]
         public string horario { get; set; }
-        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
     
         public virtual Proyecto Proyecto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Integrante> Integrante { get; set; }
     }
 }

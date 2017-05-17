@@ -114,6 +114,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="aumentarRecurso" FunctionName="EntityModel.Store.aumentarRecurso" />
     <FunctionImportMapping FunctionImportName="crearActividad" FunctionName="EntityModel.Store.crearActividad" />
     <FunctionImportMapping FunctionImportName="crearCargo" FunctionName="EntityModel.Store.crearCargo" />
     <FunctionImportMapping FunctionImportName="crearIntegrante" FunctionName="EntityModel.Store.crearIntegrante" />
