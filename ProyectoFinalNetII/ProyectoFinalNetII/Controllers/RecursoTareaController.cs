@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
-    public class Recurso_TareaController : Controller
+    public class RecursoTareaController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector dao = new daoDirector();
 
         // GET: /Recurso_Tarea/
         public ActionResult Index()
@@ -50,20 +52,29 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,cantidad,Actividad_id,Tarea_id,Recurso_id")] Recurso_Tarea recurso_tarea)
+        public ActionResult Create([Bind(Include = "id,cantidad,Actividad_id,Tarea_id,Recurso_id")] Recurso_Tarea recurso_tarea)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
-                    db.createRecursoTarea(recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
-                    return RedirectToAction("Index");
+                    bool resp = dao.verificarRecurso(recurso_tarea.cantidad,recurso_tarea.Recurso_id);
+
+                    if(resp){
+                        db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
+                        db.createRecursoTarea(recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                }  
+                }
             }
 
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
@@ -95,13 +106,24 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,cantidad,Actividad_id,Tarea_id,Recurso_id")] Recurso_Tarea recurso_tarea)
+        public ActionResult Edit([Bind(Include = "id,cantidad,Actividad_id,Tarea_id,Recurso_id")] Recurso_Tarea recurso_tarea)
         {
             if (ModelState.IsValid)
             {
-                db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
-                db.editarRecursoTarea(recurso_tarea.id, recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
-                return RedirectToAction("Index");
+
+                bool resp = dao.modificarCantRecurso(recurso_tarea.cantidad, recurso_tarea.id,
+                    recurso_tarea.Recurso_id);
+
+                if(resp){
+                    db.editarRecursoTarea(recurso_tarea.id, recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+                
             }
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
             ViewBag.Recurso_id = new SelectList(db.Recurso, "id", "nombre", recurso_tarea.Recurso_id);
@@ -129,6 +151,7 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            dao.aumentarRecusrsoEliminando(id);
             db.eliminarRecursoTarea(id);
             return RedirectToAction("Index");
         }

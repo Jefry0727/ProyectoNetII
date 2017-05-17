@@ -24,14 +24,14 @@
                     @using Microsoft.AspNet.Identity
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Datos Director", "Index", "usuario")</li>
-                        <li>@Html.ActionLink("Gestion Proyectos", "Index", "proyecto")</li>
+                        //<li>@Html.ActionLink("Datos Director", "Index", "usuario")</li>
+                        //<li>@Html.ActionLink("Gestion Proyectos", "Index", "proyecto")</li>
                         //<li>@Html.ActionLink("Gestion Tareas", "Index", "tarea")</li>
-                        //<li>@Html.ActionLink("Gestion Recurso-Tarea", "Index", "recursoTarea")</li>
+                        <li>@Html.ActionLink("Gestion Recurso-Tarea", "Index", "RecursoTarea")</li>
                         //<li>@Html.ActionLink("Gestion Actividades", "Index", "actividad")</li>
-                        <li>@Html.ActionLink("Gestion Cargos", "Index", "cargo")</li>
+                        //<li>@Html.ActionLink("Gestion Cargos", "Index", "cargo")</li>
                         //<li>@Html.ActionLink("Gestion Reunion", "Index", "reunion")</li>
-                        //<li>@Html.ActionLink("Gestion Recurso", "Index", "recurso")</li>
+                        <li>@Html.ActionLink("Gestion Recurso", "Index", "recurso")</li>
                         //<li>@Html.ActionLink("Gestion Integrantes", "Index", "integrante")</li>
                     }
                     else

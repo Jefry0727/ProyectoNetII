@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Platform.Entity.Entity.Recurso_Tarea>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Actividad.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recurso.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tarea.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Actividad.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recurso.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tarea.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

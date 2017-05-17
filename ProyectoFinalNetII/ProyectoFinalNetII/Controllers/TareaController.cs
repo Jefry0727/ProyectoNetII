@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class TareaController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector dao = new daoDirector();
 
         // GET: /Tarea/
         public ActionResult Index()
@@ -107,8 +109,16 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.eliminarTarea(id);
-            return RedirectToAction("Index");
+            bool resp = dao.verificarTarea(id);
+            if(resp){
+                db.eliminarTarea(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

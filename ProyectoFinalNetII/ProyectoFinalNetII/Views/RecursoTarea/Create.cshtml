@@ -7,10 +7,10 @@
 <h2>Crear</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Recurso Tarea</h4>
         <hr />
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Actividad_id, "Actividad", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Actividad_id", "Seleccione..")
+                @Html.DropDownList("Actividad_id", String.Empty)
                 @Html.ValidationMessageFor(model => model.Actividad_id)
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Tarea_id, "Tarea", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Tarea_id", "Seleccione..")
+                @Html.DropDownList("Tarea_id", String.Empty)
                 @Html.ValidationMessageFor(model => model.Tarea_id)
             </div>
         </div>
@@ -43,14 +43,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Recurso_id, "Recurso", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Recurso_id", "Seleccione..")
+                @Html.DropDownList("Recurso_id", String.Empty)
                 @Html.ValidationMessageFor(model => model.Recurso_id)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>

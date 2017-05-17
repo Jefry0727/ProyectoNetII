@@ -161,11 +161,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActividadController.cs" />
     <Compile Include="Controllers\CargoController.cs" />
+    <Compile Include="Controllers\daoDirecto.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IntegranteController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\RecursoController.cs" />
-    <Compile Include="Controllers\Recurso_TareaController.cs" />
+    <Compile Include="Controllers\RecursoTareaController.cs" />
     <Compile Include="Controllers\ReunionController.cs" />
     <Compile Include="Controllers\TareaController.cs" />
     <Compile Include="Controllers\Tipo_UsuarioController.cs" />
@@ -249,11 +250,6 @@
     <Content Include="Views\Proyecto\Details.cshtml" />
     <Content Include="Views\Proyecto\Edit.cshtml" />
     <Content Include="Views\Proyecto\Index.cshtml" />
-    <Content Include="Views\Recurso_Tarea\Create.cshtml" />
-    <Content Include="Views\Recurso_Tarea\Delete.cshtml" />
-    <Content Include="Views\Recurso_Tarea\Details.cshtml" />
-    <Content Include="Views\Recurso_Tarea\Edit.cshtml" />
-    <Content Include="Views\Recurso_Tarea\Index.cshtml" />
     <Content Include="Views\Reunion\Create.cshtml" />
     <Content Include="Views\Reunion\Delete.cshtml" />
     <Content Include="Views\Reunion\Details.cshtml" />
@@ -274,6 +270,11 @@
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\RecursoTarea\Create.cshtml" />
+    <Content Include="Views\RecursoTarea\Delete.cshtml" />
+    <Content Include="Views\RecursoTarea\Details.cshtml" />
+    <Content Include="Views\RecursoTarea\Edit.cshtml" />
+    <Content Include="Views\RecursoTarea\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

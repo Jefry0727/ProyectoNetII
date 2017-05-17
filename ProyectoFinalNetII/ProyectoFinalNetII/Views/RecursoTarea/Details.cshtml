@@ -1,15 +1,14 @@
 ﻿@model Platform.Entity.Entity.Recurso_Tarea
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
 }
 
-<h2>Eliminar</h2>
+<h2>Detalle</h2>
 
-<h3>¿Estas seguro que quieres eliminar esto?</h3>
 <div>
     <h4>Recurso Tarea</h4>
-    <hr />
+	<hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.cantidad)
@@ -44,14 +43,8 @@
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Volver", "Index")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Volver", "Index")
+</p>

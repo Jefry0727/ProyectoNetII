@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class IntegranteController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector dao = new daoDirector();
 
         // GET: /Integrante/
         public ActionResult Index()
@@ -54,8 +56,17 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.crearIntegrante(integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
-                return RedirectToAction("Index");
+                bool resp = dao.verificarIntegrante(integrante.Usuario_id);
+                if(resp){
+                    db.crearIntegrante(integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+                
             }
 
             ViewBag.Cargo_id = new SelectList(db.Cargo, "id", "nombre", integrante.Cargo_id);
@@ -91,8 +102,19 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.editarIntegrante(integrante.id, integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
-                return RedirectToAction("Index");
+
+                bool resp = dao.verificarIntegrante(integrante.Usuario_id);
+                if (resp)
+                {
+                    db.editarIntegrante(integrante.id, integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+                
             }
             ViewBag.Cargo_id = new SelectList(db.Cargo, "id", "nombre", integrante.Cargo_id);
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", integrante.Proyecto_id);
