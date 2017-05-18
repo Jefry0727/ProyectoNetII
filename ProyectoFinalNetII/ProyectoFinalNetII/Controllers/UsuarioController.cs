@@ -20,8 +20,9 @@ namespace ProyectoFinalNetII.Controllers
         // GET: /Usuario/
         public ActionResult Index()
         {
-            var usuario = db.Usuario.Include(u => u.Tipo_Usuario1);
-            return View(usuario.ToList());
+            String usu = (string)(Session["Usuario"]);
+            List<Usuario> u = daoDir.listarUsu(usu);
+            return View(u);
         }
 
         // GET: /Usuario/Details/5
@@ -100,7 +101,14 @@ namespace ProyectoFinalNetII.Controllers
         public ActionResult Edit([Bind(Include="id,cedula,nombre,apellido,edad,telefono,usuario1,contrasenia,correo,Tipo_Usuario")] Usuario usuario)
         {
             if (ModelState.IsValid)
-            {
+            {                
+                String usu = (string)(Session["Usuario"]);
+                String pass = (string)(Session["Contrasenia"]);
+
+                usuario.usuario1 = usu;
+                usuario.contrasenia = pass;
+                usuario.Tipo_Usuario = 2;
+
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

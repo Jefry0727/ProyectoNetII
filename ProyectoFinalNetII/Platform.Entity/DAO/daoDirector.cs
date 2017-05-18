@@ -13,9 +13,13 @@ namespace Platform.Entity.DAO
         EntityEntities d;
         int idDirector;
         List<Proyecto> proyectos;
+        List<Cargo> cargos;
         Proyecto pro;
+        Cargo cargo;
         List<Usuario> usuario;
         Usuario u;
+        List<Integrante> integrantes;
+        Integrante integrante;
         private EntityEntities db = new EntityEntities();
 
         public daoDirector()
@@ -23,11 +27,13 @@ namespace Platform.Entity.DAO
             d = new EntityEntities();
             proyectos = new List<Proyecto>();
             pro = new Proyecto();
+            cargos = new List<Cargo>();            
             usuario = new List<Usuario>();
             u = new Usuario();
+            integrantes = new List<Integrante>();
+            
         }
 
-        
         /**
          * Metodo para conocer el id del usuario conectado
          **/
@@ -86,10 +92,18 @@ namespace Platform.Entity.DAO
         public List<Proyecto> listaProyectos(int idUsu){
 
             var consulta = d.Proyecto.Where(p => p.Usuario_id == idUsu).
-                 Select(p => new { p.nombre , p.fecha_inicio, p.fecha_fin,
-                 p.etapa,p.Usuario_id}).ToList();
+                 Select(p => new
+                 {
+                     p.id,
+                     p.nombre,
+                     p.fecha_inicio,
+                     p.fecha_fin,
+                     p.etapa,
+                     p.Usuario_id
+                 }).ToList();
 
             foreach(var p in consulta){
+                pro.id = p.id;
                 pro.nombre = p.nombre;
                 pro.fecha_inicio = p.fecha_inicio;
                 pro.fecha_fin = p.fecha_fin;
@@ -99,6 +113,65 @@ namespace Platform.Entity.DAO
             }
             
             return proyectos;
+        }
+
+        /**
+        * Metodo para traer los cargos de un proyecto
+        * */
+        public List<Cargo> listaCargos(int idPro)
+        {
+
+            var consulta = d.Cargo.Where(p => p.Proyecto_id == idPro).
+                 Select(p => new
+                 {
+                     p.id,
+                     p.nombre,
+                     p.salario,
+                     p.horario,
+                     p.Proyecto_id
+                 }).ToList();
+
+            foreach (var p in consulta)
+            {
+                cargo = new Cargo();
+                cargo.id = p.id;
+                cargo.nombre = p.nombre;
+                cargo.salario = p.salario;
+                cargo.horario = p.horario;
+                cargo.Proyecto_id = p.Proyecto_id;
+                cargos.Add(cargo);
+            }
+
+            return cargos;
+        }
+
+
+        /**
+       * Metodo para traer los integrantes de un proyecto
+       * */
+        public List<Integrante> listaIntegrantesProyectos(int idPro)
+        {
+
+            var consulta = d.Integrante.Where(p => p.Proyecto_id == idPro).
+                 Select(p => new
+                 {
+                     p.id,
+                     p.Proyecto_id,
+                     p.Cargo_id,
+                     p.Usuario_id
+                 }).ToList();
+
+            foreach (var p in consulta)
+            {
+                integrante = new Integrante();
+                integrante.id = p.id;
+                integrante.Proyecto_id = p.Proyecto_id;
+                integrante.Cargo_id = p.Cargo_id;
+                integrante.Usuario_id = p.Usuario_id;
+                integrantes.Add(integrante);
+            }
+
+            return integrantes;
         }
 
         /**
@@ -229,7 +302,7 @@ namespace Platform.Entity.DAO
                 else
                 {
                     int nuevoValor = cantidadRequerida * -1;
-                    //db.aumentarRecurso(nuevoValor, idRecurso);
+                    db.aumentarRecurso(nuevoValor, idRecurso);
                     return true;
                     
                 }
@@ -259,7 +332,8 @@ namespace Platform.Entity.DAO
                 idRecurso = b.Recurso_id;
             }
 
-            //db.aumentarRecurso(cantRecurso , idRecurso);
+            db.aumentarRecurso(cantRecurso , idRecurso);
+            
         }
 
         /**
@@ -300,6 +374,162 @@ namespace Platform.Entity.DAO
             }
 
         }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un proyecto
+         * */
+        public bool verificarProyecto(int idProyecto)
+        {
+            var consulta = d.Actividad.Where(a => a.Proyecto_id == idProyecto).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para saber si un director ya esta en un proyecto
+         * */
+        public bool verificarPosibleProyecto(int idUsuario)
+        {
+            var consulta = d.Proyecto.Where(a => a.Usuario_id == idUsuario).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de una actividad
+         * */
+        public bool verificarActividad(int idActividad)
+        {
+
+            var consulta = d.Recurso_Tarea.Where(r => r.Actividad_id == idActividad).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un proyecto
+         * */
+        public bool verificarProyectoCargo(int idProyecto)
+        {
+            var consulta = d.Cargo.Where(a => a.Proyecto_id == idProyecto).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un proyecto
+         * */
+        public bool verificarProyectoIntegra(int idProyecto)
+        {
+            var consulta = d.Integrante.Where(a => a.Proyecto_id == idProyecto).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un proyecto
+         * */
+        public bool verificarProyectoReunion(int idProyecto)
+        {
+            var consulta = d.Reunion.Where(a => a.Proyecto_id == idProyecto).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un integrante
+         * */
+        public bool verificarIntegreanteActividad(int idInte)
+        {
+            var consulta = d.Actividad.Where(a => a.Integrante_id == idInte).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Metodo para evitar o permitir la eliminacion de un cargo
+         * */
+        public bool verificarCargoIntegrante(int idCargo)
+        {
+            var consulta = d.Integrante.Where(a => a.Cargo_id == idCargo).
+               Select(a => new { a.id }).ToList();
+            int i = consulta.Count;
+
+            if (i != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        
 
     }
     

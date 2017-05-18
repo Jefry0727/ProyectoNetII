@@ -19,6 +19,7 @@ namespace ProyectoFinalNetII.Controllers
         // GET: /Recurso/
         public ActionResult Index()
         {
+            var algo = db.Recurso.ToList();
             return View(db.Recurso.ToList());
         }
 

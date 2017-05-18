@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class ActividadController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector dao = new daoDirector();
 
         // GET: /Actividad/
         public ActionResult Index()
@@ -116,10 +118,18 @@ namespace ProyectoFinalNetII.Controllers
         // POST: /Actividad/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)        
         {
-            db.eliminarActividad(id);
-            return RedirectToAction("Index");
+            bool resp = dao.verificarActividad(id);
+            if(resp){
+                db.eliminarActividad(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

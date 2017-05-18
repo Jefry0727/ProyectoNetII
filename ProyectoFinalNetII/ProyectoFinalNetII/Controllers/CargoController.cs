@@ -7,18 +7,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Platform.Entity.Entity;
+using Platform.Entity.DAO;
 
 namespace ProyectoFinalNetII.Controllers
 {
     public class CargoController : Controller
     {
         private EntityEntities db = new EntityEntities();
+        private daoDirector dao = new daoDirector();
 
         // GET: /Cargo/
         public ActionResult Index()
         {
-            var cargo = db.Cargo.Include(c => c.Proyecto);
-            return View(cargo.ToList());
+            int idPro = (int)(Session["idProyecto"]);
+            List<Cargo> cargos = dao.listaCargos(idPro);
+            return View(cargos);
         }
 
         // GET: /Cargo/Details/5
@@ -52,7 +55,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.crearCargo(cargo.nombre, cargo.salario, cargo.horario, cargo.Proyecto_id);
+                int idPro = (int)(Session["idProyecto"]);
+                db.crearCargo(cargo.nombre, cargo.salario, cargo.horario, idPro);
                 return RedirectToAction("Index");
             }
 
@@ -85,6 +89,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
+                int idPro = (int)(Session["idProyecto"]);
+                cargo.Proyecto_id = idPro;
                 db.Entry(cargo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -113,10 +119,19 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cargo cargo = db.Cargo.Find(id);
-            db.Cargo.Remove(cargo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            bool resp = dao.verificarCargoIntegrante(id);
+            if(resp){
+                Cargo cargo = db.Cargo.Find(id);
+                db.Cargo.Remove(cargo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+            
         }
 
         protected override void Dispose(bool disposing)

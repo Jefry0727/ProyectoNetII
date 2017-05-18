@@ -23,8 +23,13 @@ namespace ProyectoFinalNetII.Controllers
         // GET: /Proyecto/
         public ActionResult Index()
         {
-            var proyecto = db.Proyecto.Include(p => p.Usuario);
-            return View(proyecto.ToList());
+            String usu = (string)(Session["Usuario"]);
+            idDire = dao.proyectosDirector(usu);
+            List<Proyecto> proys = dao.listaProyectos(idDire);
+            foreach(var a in proys){
+                Session["idProyecto"] = a.id;
+            }
+            return View(proys);
         }
 
         // GET: /Proyecto/Details/5
@@ -60,7 +65,8 @@ namespace ProyectoFinalNetII.Controllers
             {
                 String usu = (string)(Session["Usuario"]);
                 idDire = dao.proyectosDirector(usu);
-                if(idDire != 0){
+                bool resp = dao.verificarPosibleProyecto(idDire);
+                if(idDire != 0 && resp){
                     db.crearProyecto(proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
                     proyecto.etapa, idDire);
                     return RedirectToAction("Index");
@@ -101,8 +107,10 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
+                String usu = (string)(Session["Usuario"]);
+                idDire = dao.proyectosDirector(usu);
                 db.editarProyecto(proyecto.id, proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
-                    proyecto.etapa, proyecto.Usuario_id);
+                    proyecto.etapa, idDire);
                 return RedirectToAction("Index");
             }
             ViewBag.Usuario_id = new SelectList(db.Usuario, "id", "cedula", proyecto.Usuario_id);
@@ -129,8 +137,20 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.eliminarProyecto(id);
-            return RedirectToAction("Index");
+            bool resp = dao.verificarProyecto(id);
+            bool resp2 = dao.verificarProyectoCargo(id);
+            bool resp3 = dao.verificarProyectoIntegra(id);
+            bool resp4 = dao.verificarProyectoReunion(id);
+
+            if(resp && resp2 && resp3 && resp4){
+                db.eliminarProyecto(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+           
         }
 
         protected override void Dispose(bool disposing)

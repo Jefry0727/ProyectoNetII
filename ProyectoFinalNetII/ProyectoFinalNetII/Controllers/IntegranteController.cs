@@ -19,6 +19,8 @@ namespace ProyectoFinalNetII.Controllers
         // GET: /Integrante/
         public ActionResult Index()
         {
+            //int idPro = (int)(Session["idProyecto"]);
+            //List<Integrante> integrantes = dao.listaIntegrantesProyectos(idPro);
             var integrante = db.Integrante.Include(i => i.Cargo).Include(i => i.Proyecto).Include(i => i.Usuario);
             return View(integrante.ToList());
         }
@@ -58,7 +60,8 @@ namespace ProyectoFinalNetII.Controllers
             {
                 bool resp = dao.verificarIntegrante(integrante.Usuario_id);
                 if(resp){
-                    db.crearIntegrante(integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
+                    int idPro = (int)(Session["idProyecto"]);
+                    db.crearIntegrante(idPro, integrante.Cargo_id, integrante.Usuario_id);
                     return RedirectToAction("Index");
                 }
                 else
@@ -106,7 +109,8 @@ namespace ProyectoFinalNetII.Controllers
                 bool resp = dao.verificarIntegrante(integrante.Usuario_id);
                 if (resp)
                 {
-                    db.editarIntegrante(integrante.id, integrante.Proyecto_id, integrante.Cargo_id, integrante.Usuario_id);
+                    int idPro = (int)(Session["idProyecto"]);
+                    db.editarIntegrante(integrante.id, idPro , integrante.Cargo_id, integrante.Usuario_id);
                     return RedirectToAction("Index");
                 }
                 else
@@ -142,8 +146,16 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            db.eliminarIntegrante(id);
-            return RedirectToAction("Index");
+            bool resp = dao.verificarIntegreanteActividad(id);
+            if(resp){
+                db.eliminarIntegrante(id);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
