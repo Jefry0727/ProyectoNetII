@@ -52,7 +52,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.crearReunion(reunion.lugar, reunion.tematica, reunion.Proyecto_id);
+                int idPro = (int)(Session["idProyecto"]);
+                db.crearReunion(reunion.lugar, reunion.tematica, idPro);
                 return RedirectToAction("Index");
             }
 
@@ -85,7 +86,8 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.editarReunion(reunion.id, reunion.lugar, reunion.tematica, reunion.Proyecto_id);
+                int idPro = (int)(Session["idProyecto"]);
+                db.editarReunion(reunion.id, reunion.lugar, reunion.tematica, idPro);
                 return RedirectToAction("Index");
             }
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", reunion.Proyecto_id);

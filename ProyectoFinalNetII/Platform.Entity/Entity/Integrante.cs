@@ -11,6 +11,7 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Integrante
     {
@@ -19,10 +20,14 @@ namespace Platform.Entity.Entity
         {
             this.Actividad = new HashSet<Actividad>();
         }
-    
+
+        [DisplayName("Integrante")]
         public int id { get; set; }
+        [DisplayName("Proyecto")]
         public int Proyecto_id { get; set; }
+        [DisplayName("Cargo")]
         public int Cargo_id { get; set; }
+        [DisplayName("Integrante")]
         public int Usuario_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -16,7 +16,7 @@ namespace ProyectoFinalNetII.Controllers
         private EntityEntities db = new EntityEntities();
 
         private daoDirector dao = new daoDirector();
-        
+
         int idDire;
         List<Proyecto> proys = new List<Proyecto>();
 
@@ -26,7 +26,8 @@ namespace ProyectoFinalNetII.Controllers
             String usu = (string)(Session["Usuario"]);
             idDire = dao.proyectosDirector(usu);
             List<Proyecto> proys = dao.listaProyectos(idDire);
-            foreach(var a in proys){
+            foreach (var a in proys)
+            {
                 Session["idProyecto"] = a.id;
             }
             return View(proys);
@@ -59,23 +60,33 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,nombre,fecha_inicio,fecha_fin,etapa,Usuario_id")] Proyecto proyecto)
+        public ActionResult Create([Bind(Include = "id,nombre,fecha_inicio,fecha_fin,etapa,Usuario_id")] Proyecto proyecto)
         {
             if (ModelState.IsValid)
             {
-                String usu = (string)(Session["Usuario"]);
-                idDire = dao.proyectosDirector(usu);
-                bool resp = dao.verificarPosibleProyecto(idDire);
-                if(idDire != 0 && resp){
-                    db.crearProyecto(proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
-                    proyecto.etapa, idDire);
-                    return RedirectToAction("Index");
+                TimeSpan dato = proyecto.fecha_fin - proyecto.fecha_inicio;
+                if (dato.Days >= 0)
+                {
+                    String usu = (string)(Session["Usuario"]);
+                    idDire = dao.proyectosDirector(usu);
+                    bool resp = dao.verificarPosibleProyecto(idDire);
+                    if (idDire != 0 && resp)
+                    {
+                        db.crearProyecto(proyecto.nombre, proyecto.fecha_inicio, proyecto.fecha_fin,
+                        proyecto.etapa, idDire);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
                     return RedirectToAction("Index");
                 }
-                
+
+
             }
 
             ViewBag.Usuario_id = new SelectList(db.Usuario, "id", "cedula", proyecto.Usuario_id);
@@ -103,7 +114,7 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,nombre,fecha_inicio,fecha_fin,etapa,Usuario_id")] Proyecto proyecto)
+        public ActionResult Edit([Bind(Include = "id,nombre,fecha_inicio,fecha_fin,etapa,Usuario_id")] Proyecto proyecto)
         {
             if (ModelState.IsValid)
             {
@@ -142,7 +153,8 @@ namespace ProyectoFinalNetII.Controllers
             bool resp3 = dao.verificarProyectoIntegra(id);
             bool resp4 = dao.verificarProyectoReunion(id);
 
-            if(resp && resp2 && resp3 && resp4){
+            if (resp && resp2 && resp3 && resp4)
+            {
                 db.eliminarProyecto(id);
                 return RedirectToAction("Index");
             }
@@ -150,7 +162,7 @@ namespace ProyectoFinalNetII.Controllers
             {
                 return RedirectToAction("Index");
             }
-           
+
         }
 
         protected override void Dispose(bool disposing)

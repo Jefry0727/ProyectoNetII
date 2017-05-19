@@ -25,14 +25,14 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Datos Director", "Index", "usuario")</li>
-                        <li>@Html.ActionLink("Proyectos", "Index", "proyecto")</li>
-                        //<li>@Html.ActionLink("Tareas", "Index", "tarea")</li>
-                        //<li>@Html.ActionLink("Recurso-Tarea", "Index", "RecursoTarea")</li>
-                        //<li>@Html.ActionLink("Actividades", "Index", "actividad")</li>
+                        <li>@Html.ActionLink("Proyecto", "Index", "proyecto")</li>                        
+                        <li>@Html.ActionLink("Actividades", "Index", "actividad")</li>
                         <li>@Html.ActionLink("Cargos", "Index", "cargo")</li>
-                        //<li>@Html.ActionLink("Reunion", "Index", "reunion")</li>
-                        //<li>@Html.ActionLink("Recurso", "Index", "recurso")</li>
-                        <li>@Html.ActionLink("Integrantes", "Index", "integrante")</li>
+                        <li>@Html.ActionLink("Integrantes", "Index", "integrante")</li>                      
+                        <li>@Html.ActionLink("Tareas", "Index", "tarea")</li>
+                        <li>@Html.ActionLink("Recursos", "Index", "recurso")</li>    
+                        <li>@Html.ActionLink("Recurso-Tarea", "Index", "RecursoTarea")</li>                                            
+                        <li>@Html.ActionLink("Reunion", "Index", "reunion")</li>
                     }
                     else
                     {

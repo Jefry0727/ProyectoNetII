@@ -53,8 +53,15 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.crearRecurso(recurso.nombre, recurso.cantidad, recurso.ubicacion);
-                return RedirectToAction("Index");
+                if(recurso.cantidad >= 0){
+                    db.crearRecurso(recurso.nombre, recurso.cantidad, recurso.ubicacion);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             return View(recurso);
@@ -84,8 +91,15 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.editarRecurso(recurso.id, recurso.nombre, recurso.cantidad, recurso.ubicacion);
-                return RedirectToAction("Index");
+                if(recurso.cantidad >= 0){
+                    db.editarRecurso(recurso.id, recurso.nombre, recurso.cantidad, recurso.ubicacion);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             return View(recurso);
         }

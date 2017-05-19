@@ -52,8 +52,16 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.crearTarea(tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
-                return RedirectToAction("Index");
+                TimeSpan dato = tarea.fecha_fin - tarea.fecha_inicio;
+                if(dato.Days >= 0){
+                    db.crearTarea(tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             return View(tarea);
@@ -81,10 +89,20 @@ namespace ProyectoFinalNetII.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="id,nombre,fecha_inicio,fecha_fin,porcentaje,estado")] Tarea tarea)
         {
+            
+
             if (ModelState.IsValid)
             {
-                db.editarTarea(tarea.id, tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
-                return RedirectToAction("Index");
+                TimeSpan dato = tarea.fecha_fin - tarea.fecha_inicio;
+                if(dato.Days >= 0){
+                    db.editarTarea(tarea.id, tarea.nombre, tarea.fecha_inicio, tarea.fecha_fin, tarea.porcentaje, tarea.estado);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             return View(tarea);
         }

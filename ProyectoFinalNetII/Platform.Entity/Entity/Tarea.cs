@@ -11,6 +11,7 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Tarea
     {
@@ -19,12 +20,18 @@ namespace Platform.Entity.Entity
         {
             this.Recurso_Tarea = new HashSet<Recurso_Tarea>();
         }
-    
+
+        [DisplayName("Tarea")]
         public int id { get; set; }
+        [DisplayName("Nombre")]
         public string nombre { get; set; }
+        [DisplayName("Fecha Inicio")]
         public System.DateTime fecha_inicio { get; set; }
+        [DisplayName("Fecha Fin")]
         public System.DateTime fecha_fin { get; set; }
+        [DisplayName("Porcentaje")]
         public string porcentaje { get; set; }
+        [DisplayName("Estado")]
         public string estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -55,9 +55,16 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                int idPro = (int)(Session["idProyecto"]);
-                db.crearCargo(cargo.nombre, cargo.salario, cargo.horario, idPro);
-                return RedirectToAction("Index");
+                if(cargo.salario >= 0){
+                    int idPro = (int)(Session["idProyecto"]);
+                    db.crearCargo(cargo.nombre, cargo.salario, cargo.horario, idPro);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", cargo.Proyecto_id);
@@ -89,11 +96,18 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                int idPro = (int)(Session["idProyecto"]);
-                cargo.Proyecto_id = idPro;
-                db.Entry(cargo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if(cargo.salario >= 0){
+                    int idPro = (int)(Session["idProyecto"]);
+                    cargo.Proyecto_id = idPro;
+                    db.Entry(cargo).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", cargo.Proyecto_id);
             return View(cargo);

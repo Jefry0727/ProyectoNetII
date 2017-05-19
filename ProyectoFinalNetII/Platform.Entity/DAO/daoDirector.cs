@@ -20,6 +20,8 @@ namespace Platform.Entity.DAO
         Usuario u;
         List<Integrante> integrantes;
         Integrante integrante;
+        List<Actividad> actividades;
+        Actividad actividad;
         private EntityEntities db = new EntityEntities();
 
         public daoDirector()
@@ -31,7 +33,7 @@ namespace Platform.Entity.DAO
             usuario = new List<Usuario>();
             u = new Usuario();
             integrantes = new List<Integrante>();
-            
+            actividades = new List<Actividad>();
         }
 
         /**
@@ -147,6 +149,40 @@ namespace Platform.Entity.DAO
 
 
         /**
+        * Metodo para traer las actividades de un proyecto
+        * */
+        public List<Actividad> listaActividad(int idPro)
+        {
+
+            var consulta = d.Actividad.Where(p => p.Proyecto_id == idPro).
+                 Select(p => new
+                 {
+                     p.id,
+                     p.nombre,
+                     p.fecha_inicio,
+                     p.fecha_fin,
+                     p.descripcion,
+                     p.Proyecto_id,
+                     p.Integrante_id
+                 }).ToList();
+
+            foreach (var p in consulta)
+            {
+                actividad = new Actividad();
+                actividad.id = p.id;
+                actividad.nombre = p.nombre;
+                actividad.fecha_inicio = p.fecha_inicio;
+                actividad.fecha_fin = p.fecha_fin;
+                actividad.descripcion = p.descripcion;
+                actividad.Proyecto_id = p.Proyecto_id;
+                actividad.Integrante_id = p.Integrante_id;
+                actividades.Add(actividad);
+            }
+
+            return actividades;
+        }
+
+        /**
        * Metodo para traer los integrantes de un proyecto
        * */
         public List<Integrante> listaIntegrantesProyectos(int idPro)
@@ -182,6 +218,7 @@ namespace Platform.Entity.DAO
             var consulta = d.Usuario.Where(p => p.usuario1 == usu).
                  Select(p => new
                  {
+                     p.id,
                      p.cedula,
                      p.nombre,
                      p.apellido,
@@ -195,6 +232,7 @@ namespace Platform.Entity.DAO
 
             foreach (var p in consulta)
             {
+                u.id = p.id;
                 u.cedula = p.cedula;
                 u.nombre = p.nombre;
                 u.apellido = p.apellido;
@@ -235,6 +273,40 @@ namespace Platform.Entity.DAO
            }            
         }
 
+        /**
+         * Metodo para conocer que tipo de usuario es el usuario
+         * y asi poder registrarlo como integrante en una actividad
+         * */
+        public bool integranteActividad(int idInte)
+        {
+            int valor = 0;
+            int valor2 = 0;
+
+            var consulta = d.Integrante.Where(u => u.id == idInte).
+                 Select(u => new { u.Usuario_id }).ToList();
+
+            foreach (var a in consulta)
+            {
+                valor = a.Usuario_id;
+            }
+
+            var consulta2 = d.Usuario.Where(u => u.id == valor).
+                 Select(u => new { u.Tipo_Usuario }).ToList();
+
+            foreach (var b in consulta2)
+            {
+                valor2 = b.Tipo_Usuario;
+            }
+
+            if (valor2 == 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /**
          * Metodo para permitir la creacion de recurso tarea 

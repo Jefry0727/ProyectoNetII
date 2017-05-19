@@ -19,8 +19,9 @@ namespace ProyectoFinalNetII.Controllers
         // GET: /Actividad/
         public ActionResult Index()
         {
-            var actividad = db.Actividad.Include(a => a.Integrante).Include(a => a.Proyecto);
-            return View(actividad.ToList());
+            int idPro = (int)(Session["idProyecto"]);
+            List<Actividad> actividades = dao.listaActividad(idPro);
+            return View(actividades);
         }
 
         // GET: /Actividad/Details/5
@@ -51,13 +52,32 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,nombre,fecha_inicio,fecha_fin,descripcion,Proyecto_id,Integrante_id")] Actividad actividad)
+        public ActionResult Create([Bind(Include = "id,nombre,fecha_inicio,fecha_fin,descripcion,Proyecto_id,Integrante_id")] Actividad actividad)
         {
             if (ModelState.IsValid)
             {
-                db.crearActividad(actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
-                    actividad.Proyecto_id, actividad.Integrante_id);
-                return RedirectToAction("Index");
+                TimeSpan dato = actividad.fecha_fin - actividad.fecha_inicio;
+                if (dato.Days >= 0)
+                {
+                    bool resp = dao.integranteActividad(actividad.Integrante_id);
+                    if (resp)
+                    {
+                        int idPro = (int)(Session["idProyecto"]);
+                        db.crearActividad(actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
+                            idPro, actividad.Integrante_id);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+
             }
 
             ViewBag.Integrante_id = new SelectList(db.Integrante, "id", "id", actividad.Integrante_id);
@@ -87,13 +107,33 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,nombre,fecha_inicio,fecha_fin,descripcion,Proyecto_id,Integrante_id")] Actividad actividad)
+        public ActionResult Edit([Bind(Include = "id,nombre,fecha_inicio,fecha_fin,descripcion,Proyecto_id,Integrante_id")] Actividad actividad)
         {
             if (ModelState.IsValid)
             {
-                db.editarActividad(actividad.id, actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
-                    actividad.Proyecto_id, actividad.Integrante_id);
-                return RedirectToAction("Index");
+                TimeSpan dato = actividad.fecha_fin - actividad.fecha_inicio;
+                if (dato.Days >= 0)
+                {
+                    bool resp = dao.integranteActividad(actividad.Integrante_id);
+                    if (resp)
+                    {
+                        int idPro = (int)(Session["idProyecto"]);
+                        db.editarActividad(actividad.id, actividad.nombre, actividad.fecha_inicio, actividad.fecha_fin, actividad.descripcion,
+                            idPro, actividad.Integrante_id);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+
+
             }
             ViewBag.Integrante_id = new SelectList(db.Integrante, "id", "id", actividad.Integrante_id);
             ViewBag.Proyecto_id = new SelectList(db.Proyecto, "id", "nombre", actividad.Proyecto_id);
@@ -118,10 +158,11 @@ namespace ProyectoFinalNetII.Controllers
         // POST: /Actividad/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)        
+        public ActionResult DeleteConfirmed(int id)
         {
             bool resp = dao.verificarActividad(id);
-            if(resp){
+            if (resp)
+            {
                 db.eliminarActividad(id);
                 return RedirectToAction("Index");
             }
@@ -129,7 +170,7 @@ namespace ProyectoFinalNetII.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
+
         }
 
         protected override void Dispose(bool disposing)

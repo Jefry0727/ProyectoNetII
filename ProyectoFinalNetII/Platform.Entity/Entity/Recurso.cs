@@ -11,6 +11,7 @@ namespace Platform.Entity.Entity
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class Recurso
     {
@@ -19,10 +20,14 @@ namespace Platform.Entity.Entity
         {
             this.Recurso_Tarea = new HashSet<Recurso_Tarea>();
         }
-    
+
+        [DisplayName("Recurso")]
         public int id { get; set; }
+        [DisplayName("Nombre")]
         public string nombre { get; set; }
+        [DisplayName("Cantidad")]
         public int cantidad { get; set; }
+        [DisplayName("Ubicacion")]
         public string ubicacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

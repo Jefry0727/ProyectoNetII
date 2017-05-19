@@ -56,11 +56,12 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
+                if (recurso_tarea.cantidad >= 0)
                 {
-                    bool resp = dao.verificarRecurso(recurso_tarea.cantidad,recurso_tarea.Recurso_id);
+                    bool resp = dao.verificarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
 
-                    if(resp){
+                    if (resp)
+                    {
                         db.descontarRecurso(recurso_tarea.cantidad, recurso_tarea.Recurso_id);
                         db.createRecursoTarea(recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
                         return RedirectToAction("Index");
@@ -69,13 +70,14 @@ namespace ProyectoFinalNetII.Controllers
                     {
                         return RedirectToAction("Index");
                     }
-                    
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine(e.Message);
+                    return RedirectToAction("Index");
                 }
+
             }
+
 
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
             ViewBag.Recurso_id = new SelectList(db.Recurso, "id", "nombre", recurso_tarea.Recurso_id);
@@ -110,20 +112,28 @@ namespace ProyectoFinalNetII.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                bool resp = dao.modificarCantRecurso(recurso_tarea.cantidad, recurso_tarea.id,
+                if (recurso_tarea.cantidad >= 0)
+                {
+                    bool resp = dao.modificarCantRecurso(recurso_tarea.cantidad, recurso_tarea.id,
                     recurso_tarea.Recurso_id);
 
-                if(resp){
-                    db.editarRecursoTarea(recurso_tarea.id, recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
-                    return RedirectToAction("Index");
+                    if (resp)
+                    {
+                        db.editarRecursoTarea(recurso_tarea.id, recurso_tarea.cantidad, recurso_tarea.Actividad_id, recurso_tarea.Tarea_id, recurso_tarea.Recurso_id);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
                     return RedirectToAction("Index");
                 }
 
-                
+
+
             }
             ViewBag.Actividad_id = new SelectList(db.Actividad, "id", "nombre", recurso_tarea.Actividad_id);
             ViewBag.Recurso_id = new SelectList(db.Recurso, "id", "nombre", recurso_tarea.Recurso_id);

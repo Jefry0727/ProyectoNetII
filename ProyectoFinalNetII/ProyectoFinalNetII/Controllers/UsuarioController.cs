@@ -52,25 +52,34 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="id,cedula,nombre,apellido,edad,telefono,usuario1,contrasenia,correo,Tipo_Usuario")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "id,cedula,nombre,apellido,edad,telefono,usuario1,contrasenia,correo,Tipo_Usuario")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                String usu = (string)(Session["Usuario"]);
-                String pass = (string)(Session["Contrasenia"]);
 
-                resp = daoDir.verificarUsuario(usu);
+                if(usuario.edad >= 0){
+                    String usu = (string)(Session["Usuario"]);
+                    String pass = (string)(Session["Contrasenia"]);
 
-                if (resp)
-                {
-                    db.registrarUsuDirector(usuario.cedula, usuario.nombre, usuario.apellido, usuario.edad,
-                    usuario.telefono, usu, pass, 1, usuario.correo);
-                    return RedirectToAction("Index");
+                    resp = daoDir.verificarUsuario(usu);
+
+                    if (resp)
+                    {
+                        db.registrarUsuDirector(usuario.cedula, usuario.nombre, usuario.apellido, usuario.edad,
+                        usuario.telefono, usu, pass, 1, usuario.correo);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
                     return RedirectToAction("Index");
                 }
+
+
             }
 
             ViewBag.Tipo_Usuario = new SelectList(db.Tipo_Usuario, "id", "tipo", usuario.Tipo_Usuario);
@@ -98,20 +107,27 @@ namespace ProyectoFinalNetII.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="id,cedula,nombre,apellido,edad,telefono,usuario1,contrasenia,correo,Tipo_Usuario")] Usuario usuario)
+        public ActionResult Edit([Bind(Include = "id,cedula,nombre,apellido,edad,telefono,usuario1,contrasenia,correo,Tipo_Usuario")] Usuario usuario)
         {
             if (ModelState.IsValid)
-            {                
-                String usu = (string)(Session["Usuario"]);
-                String pass = (string)(Session["Contrasenia"]);
+            {
+                if(usuario.edad >= 0){
+                    String usu = (string)(Session["Usuario"]);
+                    String pass = (string)(Session["Contrasenia"]);
 
-                usuario.usuario1 = usu;
-                usuario.contrasenia = pass;
-                usuario.Tipo_Usuario = 2;
+                    usuario.usuario1 = usu;
+                    usuario.contrasenia = pass;
+                    usuario.Tipo_Usuario = 1;
 
-                db.Entry(usuario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Entry(usuario).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             ViewBag.Tipo_Usuario = new SelectList(db.Tipo_Usuario, "id", "tipo", usuario.Tipo_Usuario);
             return View(usuario);
